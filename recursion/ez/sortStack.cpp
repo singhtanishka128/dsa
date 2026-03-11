@@ -53,8 +53,10 @@ void sortStack(stack<int>& s) {
 
     sort(v.begin(), v.end());
 
-    for(int x : v)
-        s.push(x);
+    for (auto it : v){
+    s.push(it);
+    }
+    
 }
 
 tc: O(n log n)
