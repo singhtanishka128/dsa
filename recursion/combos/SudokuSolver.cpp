@@ -7,47 +7,46 @@ Problem Statement: Create a program that fills in the blank cells in a Sudoku pu
 Empty cells are indicated by the '.' character.   
 
 
-void solveSudoku(vector<vector<char>>& board) {
-        solve(board);
+    bool isValid(vector<vector<char>>& board, int row, int col, char c){
+        for(int i=0;i<9;i++){
+            if(board[i][col]==c) return false;
+            if(board[row][i]==c) return false;
+            if(board[3*(row/3) + i/3][3*(col/3) + i%3]==c) return false;
+        }
+        return true;
     }
+    
+    bool solve(vector<vector<char>>& board) {
+        for(int row=0; row<9; row++){
+            for(int col=0; col<9; col++){
 
-bool solve(vector<vector<char>>& board) {
-        for (int i = 0; i < board.size(); i++) {
-            for (int j = 0; j < board[0].size(); j++) {
-                if (board[i][j] == '.') {
-                    for (char c = '1'; c <= '9'; c++) {
-                        if (isValid(board, i, j, c)) {
-                            board[i][j] = c;
+                if(board[row][col]=='.'){    //empty cell
 
-                            if (solve(board) == true)
-                                return true;
-                            else
-                                board[i][j] = '.';
+                    for(char c='1'; c<='9'; c++){   //try all
+
+                        if(isValid(board,row,col,c)){
+
+                            board[row][col]=c;
+
+                            if(solve(board)) return true;  //recursion unwinding
+
+                            board[row][col]='.'; // backtrack
                         }
                     }
-                    return false;
+
+                    return false; // nothing worked for this empty cell
                 }
             }
         }
-    return true;
-}
 
-bool isValid(vector<vector<char>>& board, int row, int col, char c) {
-        for (int i = 0; i < 9; i++) {
+        return true; // no empty cells → solved
+    }
 
-            if (board[i][col] == c)
-                return false;
+    void solveSudoku(vector<vector<char>>& board) {
+        solve(board);
+    }
 
-            if (board[row][i] == c)
-                return false;
-
-            if (board[3 * (row / 3) + i / 3][3 * (col / 3) + i % 3] == c)
-                return false;
-        }
-        return true;
-}
-
-Time Complexity: O(9(n ^ 2)), in the worst case, for each cell in the nxn board, we have 9 possible numbers.
+Time Complexity: O(9(n ^ 2)), in the worst case, for each cell in the nxn777777 board, we have 9 possible numbers.
 Space Complexity: O(1), since we are refilling the given board itself, there is no extra space required, so constant space complexity.
 
 logic:

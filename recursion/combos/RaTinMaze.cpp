@@ -74,7 +74,18 @@ we create a visited maze in order to track the visited paths since the rat canno
 whenever we reach the destination, we get back
 while we backtrack we unmark the visited as unvisited 
 
-mark the initial path 0,0 as 1 since its the starting point  */
+mark the initial path 0,0 as 1 since its the starting point 
+for each direction we check for :
+out of bound case
+not visited case
+path possibility case 
+and will keep on going in that direction until its not possible
+
+changes in direction
+down i+1
+left j-1
+right j+1
+up i-1     */
 
 
 
