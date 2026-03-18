@@ -37,6 +37,35 @@ sc: O(n) */
 
 /* optimal:
 
+  vector<int> nextGreater(vector<int>& nums) {
+        stack<int> st;
+        int n = nums.size();
+        vector<int> res(n);
 
+        for (int i = n - 1; i >= 0; i--) {
+
+            while (!st.empty() && st.top() <= nums[i]) {
+                st.pop();
+            }
+
+            if (st.empty()) res[i] = -1;
+
+            else res[i] = st.top();
+
+            st.push(nums[i]);
+        }
+
+        return res;
+    }
+
+tc: O(2n) see lecture
+sc: O(n) + O(n)
+
+iterating from back
+storing els in decreasing order (monotonic stack concept)
+remove anytime i see top is lesser than or equal to current el (keep on doing until top is > current)
+if stack is empty (no greatre el) nge = -1
+else nge = top
+everytime after i get nge of an element, push el into stcak
 
 */
